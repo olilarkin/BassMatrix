@@ -1,4 +1,4 @@
 BassMatrix changelog
 www.acmeinc.com
 
-Sound is playing
+Different size of the knobs.
