@@ -28,9 +28,20 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
 
   for (int i = kBtnSeq0; i < kBtnSeq0 + kNumberOfSeqButtons; ++i)
   {
-      char buf[256];
-      sprintf(buf, "%s %d", "Sequenser button", i - kBtnSeq0);
-      GetParam(i)->InitBool(buf, false);
+    char buf[256];
+    sprintf(buf, "%s %d", "Sequencer button", i - kBtnSeq0);
+
+    GetParam(i)->InitBool(buf, false);
+    if ((i - kBtnSeq0) / 16 == 5)
+    {
+      GetParam(i)->InitBool(buf, true);
+    }
+
+    if ((i - kBtnSeq0) / 16 == 16) // Turn on all the gate buttons
+    {
+      GetParam(i)->InitBool(buf, true);
+    }
+
   }
 
 
@@ -217,9 +228,9 @@ void BassMatrix::OnReset()
 {
   open303Core.setSampleRate(GetSampleRate());
 
-  rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
-  srand(static_cast<unsigned int>(time(0)));
-  p->randomize();
+  //rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
+  //srand(static_cast<unsigned int>(time(0)));
+  //p->randomize();
 
   //open303Core.setTuning(440.0);
   //open303Core.setCutoff(1000.0);
