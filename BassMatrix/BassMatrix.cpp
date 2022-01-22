@@ -140,7 +140,7 @@ void BassMatrix::OnParentWindowResize(int width, int height)
 #endif
 
 #if IPLUG_DSP
-void BassMatrix::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
+void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** outputs, int nFrames)
 {
   // Channel declaration.
   double* out01 = outputs[0];  double* out02 = outputs[1];
