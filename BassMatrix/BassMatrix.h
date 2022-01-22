@@ -98,7 +98,7 @@ public:
 
   
 #if IPLUG_DSP // http://bit.ly/2S64BDd
-  void ProcessBlock(double** inputs, double** outputs, int nFrames) override;
+  void ProcessBlock(sample** inputs, sample** outputs, int nFrames) override;
 #endif
 
 protected:

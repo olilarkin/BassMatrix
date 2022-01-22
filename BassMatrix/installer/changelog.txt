@@ -1,1 +1,1 @@
-One pattern can be played.
+Changed double to sample for ProcessBlock.
