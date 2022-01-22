@@ -1,1 +1,2 @@
-Changed double to sample for ProcessBlock.
+
+Don't use sample.
