@@ -77,6 +77,66 @@
     <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsSkia.cpp">
       <Filter>IGraphics\Drawing</Filter>
     </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\fft4g.c">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\GlobalFunctions.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_AcidPattern.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_AcidSequencer.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_AnalogEnvelope.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_BiquadFilter.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_BlendOscillator.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_Complex.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_DecayEnvelope.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_EllipticQuarterBandFilter.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_FourierTransformerRadix2.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_FunctionTemplates.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_LeakyIntegrator.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_MidiNoteEvent.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_MipMappedWaveTable.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_NumberManipulations.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_OnePoleFilter.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_Open303.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_RealFunctions.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_TeeBeeFilter.cpp">
+      <Filter>open303</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BassMatrix.h" />
@@ -259,6 +319,66 @@
       <Filter>IGraphics</Filter>
     </ClInclude>
     <ClInclude Include="..\o303Controls.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\GlobalDefinitions.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\GlobalFunctions.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_AcidPattern.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_AcidSequencer.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_AnalogEnvelope.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_BiquadFilter.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_BlendOscillator.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_Complex.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_DecayEnvelope.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_EllipticQuarterBandFilter.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_FourierTransformerRadix2.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_FunctionTemplates.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_LeakyIntegrator.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_MidiNoteEvent.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_MipMappedWaveTable.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_NumberManipulations.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_OnePoleFilter.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_Open303.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_RealFunctions.h">
+      <Filter>open303</Filter>
+    </ClInclude>
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_TeeBeeFilter.h">
+      <Filter>open303</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
@@ -290,6 +410,9 @@
     </Filter>
     <Filter Include="IPlug\APP\RTAudioMidi\include">
       <UniqueIdentifier>{649c5de3-b4c2-4de9-8d57-3b1762646259}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="open303">
+      <UniqueIdentifier>{567cfeca-5dce-461d-8fbf-8589c520632e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

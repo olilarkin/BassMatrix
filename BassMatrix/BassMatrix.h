@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IPlug_include_in_plug_hdr.h"
+#include "IControls.h"
+#include "open303/Source/DSPCode/rosic_Open303.h"
 
 const int kNumPresets = 1;
 const int kNumberOfPropButtons = 5 * 16;
@@ -86,8 +88,24 @@ public:
   void OnParentWindowResize(int width, int height) override;
   bool OnHostRequestingSupportedViewConfiguration(int width, int height) override { return true; }
 #endif
+
+
+	void ProcessMidiMsg(const IMidiMsg& msg) override;
+	void OnReset() override;
+	void OnParamChange(int paramIdx) override;
+	void OnIdle() override;
+	bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
+
   
 #if IPLUG_DSP // http://bit.ly/2S64BDd
-  void ProcessBlock(sample** inputs, sample** outputs, int nFrames) override;
+  void ProcessBlock(double** inputs, double** outputs, int nFrames) override;
 #endif
+
+protected:
+	IMidiQueue mMidiQueue;
+
+private:
+  // the embedded core dsp object:
+  rosic::Open303 open303Core;
+	ISender<1, 1, int> mLedSeqSender;
 };

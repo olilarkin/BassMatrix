@@ -3,6 +3,7 @@
 #endif
 
 #include "BassMatrix.h"
+#include "open303/Source/DSPCode/rosic_Open303.h"
 
 // A button control that can take a message from the DSP
 class SeqLedBtnControl : public IBSwitchControl

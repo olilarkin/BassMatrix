@@ -1,6 +1,7 @@
 #include "BassMatrix.h"
 #include "IPlug_include_in_plug_src.h"
 #include "o303Controls.h"
+#include "open303/Source/DSPCode/rosic_Open303.h"
 
 #if IPLUG_EDITOR
 #include "IControls.h"
@@ -127,15 +128,235 @@ void BassMatrix::OnParentWindowResize(int width, int height)
 #endif
 
 #if IPLUG_DSP
-void BassMatrix::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
-{ 
-  const int nChans = NOutChansConnected();
-  const double gain = GetParam(kParamGain)->Value() / 100.;
-  
-  for (int s = 0; s < nFrames; s++) {
-    for (int c = 0; c < nChans; c++) {
-      outputs[c][s] = inputs[c][s] * gain;
+void BassMatrix::ProcessBlock(double** inputs, double** outputs, int nFrames)
+{
+  // Channel declaration.
+  double* out01 = outputs[0];  double* out02 = outputs[1];
+
+  // No sample accurate leds, because they will not be accurate anyway.
+  mLedSeqSender.PushData({ kCtrlTagLedSeq0, {open303Core.sequencer.getStep()} });
+
+  if (open303Core.sequencer.getSequencerMode() == rosic::AcidSequencer::HOST_SYNC)
+  {
+    //static bool firstTime = true;
+    //if (firstTime)
+    //{
+    //  firstTime = false;
+    //  // No sample accurate sequencer, because it will not be accurate anyway
+    //  std::array<bool, kNumberOfSeqButtons> seq{ false, true, false, true };
+    //  mSequencerSender.PushData({ kCtrlTagBtnSeq0, {seq} });
+    //}
+
+    open303Core.sequencer.setTempo(GetTempo());
+    if (!GetTransportIsRunning())
+    {
+      *out01++ = *out02++ = 0.0;
+      return; // Silence
     }
   }
+
+  if ((open303Core.sequencer.getSequencerMode() == rosic::AcidSequencer::RUN ||
+    open303Core.sequencer.getSequencerMode() == rosic::AcidSequencer::HOST_SYNC) &&
+    !open303Core.sequencer.isRunning())
+  {
+    open303Core.noteOn(36, 64, 0.0);
+  }
+
+  for (int offset = 0; offset < nFrames; ++offset)
+  {
+    if (open303Core.sequencer.getSequencerMode() == rosic::AcidSequencer::HOST_SYNC)
+    {
+      if (GetSamplePos() < 0.0) // At least Cubase can give a negative sample pos in the beginning.
+      {
+        *out01++ = *out02++ = 0.0;
+        break; // Next frame
+      }
+    }
+
+    //if (open303Core.sequencer.getSequencerMode() == rosic::AcidSequencer::HOST_SYNC &&
+    //    GetSamplePos() + offset != mLastSamplePos + 1) // Transport has changed
+    //{
+    //  double maxSamplePos = GetSamplesPerBeat() * 4.0;
+    //  int currentSampleInSequence = static_cast<int>(GetSamplePos()) % static_cast<int>(maxSamplePos);
+    //  double samplesPerStep = maxSamplePos / 16.0;
+    //  int currentStepInSequence = (int)((double)currentSampleInSequence / samplesPerStep);
+    //  open303Core.sequencer.setStep(currentStepInSequence, 0);
+    //}
+
+    while (!mMidiQueue.Empty())
+    {
+      IMidiMsg msg = mMidiQueue.Peek();
+      if (msg.mOffset > offset) break;
+
+      if (msg.StatusMsg() == IMidiMsg::kNoteOn)
+      {
+        open303Core.noteOn(msg.NoteNumber(), 64, 0.0);
+      }
+      else if (msg.StatusMsg() == IMidiMsg::kNoteOff)
+      {
+        open303Core.noteOn(msg.NoteNumber(), 0, 0.0);
+      }
+
+      mMidiQueue.Remove();
+    }
+
+//    mLastSamplePos = GetSamplePos();
+
+    *out01++ = *out02++ = open303Core.getSample();
+  }
+  mMidiQueue.Flush(nFrames);
 }
+
+void BassMatrix::OnIdle()
+{
+  mLedSeqSender.TransmitData(*this);
+}
+
+void BassMatrix::OnReset()
+{
+  open303Core.setSampleRate(GetSampleRate());
+
+  rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
+  srand(static_cast<unsigned int>(time(0)));
+  p->randomize();
+
+  //open303Core.setTuning(440.0);
+  //open303Core.setCutoff(1000.0);
+  //open303Core.setResonance(50.0);
+  //open303Core.setEnvMod(0.25);
+  //open303Core.setDecay(400.0);
+  //open303Core.setAccent(0.5);
+  //open303Core.setVolume(-6.0);
+  //open303Core.setWaveform(0.0); // Default  open303Core.setWaveform(0.85);
+
+  open303Core.filter.setMode(rosic::TeeBeeFilter::TB_303); // Should be LP_12
+  open303Core.setAmpSustain(-60.0);
+  open303Core.setTanhShaperDrive(36.9);
+  open303Core.setTanhShaperOffset(4.37);
+  open303Core.setPreFilterHighpass(44.5);
+  open303Core.setFeedbackHighpass(150.0);
+  open303Core.setPostFilterHighpass(24.0);
+  open303Core.setSquarePhaseShift(189.0);
+
+  open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
+}
+
+void BassMatrix::ProcessMidiMsg(const IMidiMsg& msg)
+{
+  TRACE;
+  mMidiQueue.Add(msg); // Take care of MIDI events in ProcessBlock()
+}
+
+void BassMatrix::OnParamChange(int paramIdx)
+{
+  double value = GetParam(paramIdx)->Value();
+
+  // Note buttons
+  if (paramIdx >= kBtnSeq0 && paramIdx < kBtnSeq0 + kNumberOfSeqButtons - kNumberOfPropButtons)
+  {
+    int seqNr = paramIdx - kBtnSeq0;
+    rosic::AcidPattern* p = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
+    if (value == 1.0)
+    {
+      p->setKey(seqNr % 16, 11 - seqNr / 16); // Take care of the key notes
+    }
+    return;
+  }
+
+  // Note properties buttons
+  if (paramIdx >= kBtnProp0 && paramIdx < kBtnProp0 + kNumberOfPropButtons)
+  {
+    int seqNr = (paramIdx - kBtnProp0) % 16;
+    int rowNr = (paramIdx - kBtnProp0) / 16;
+    rosic::AcidPattern* p = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
+    if (rowNr == 0)
+    {
+      p->setOctave(seqNr, value == 1.0 ? 1 : 0);
+    }
+    if (rowNr == 1)
+    {
+      p->setOctave(seqNr, value == 1.0 ? -1 : 0);
+    }
+    if (rowNr == 2)
+    {
+      p->setAccent(seqNr, value == 1.0 ? true : false);
+    }
+    if (rowNr == 3)
+    {
+      p->setSlide(seqNr, value == 1.0 ? true : false);
+    }
+    if (rowNr == 4)
+    {
+      p->setGate(seqNr, value == 1.0 ? true : false);
+    }
+    return;
+  }
+
+  switch (paramIdx) {
+  case kParamResonance:
+    open303Core.setResonance(value);
+    break;
+  case kParamCutOff:
+    open303Core.setCutoff(value);
+    break;
+  case kParamWaveForm:
+    open303Core.setWaveform(value);
+    break;
+  case kParamTuning:
+    open303Core.setTuning(value);
+    break;
+  case kParamEnvMode:
+    open303Core.setEnvMod(value);
+    break;
+  case kParamDecay:
+    open303Core.setDecay(value);
+    break;
+  case kParamAccent:
+    open303Core.setAccent(value);
+    break;
+  case kParamVolume:
+    open303Core.setVolume(value);
+    break;
+  case kParamTempo:
+    open303Core.sequencer.setTempo(value);
+    break;
+  case kParamDrive:
+    open303Core.setTanhShaperDrive(value);
+    break;
+  case kParamHostSync:
+    open303Core.sequencer.setMode(rosic::AcidSequencer::HOST_SYNC);
+    //GetControlWithTag(kParamInternalSync)->SetValue(false);
+    //GetControlWithTag(kParamKeySync)->SetValue(false);
+    //GetControlWithTag(kParamMidiPlay)->SetValue(false);
+    break;
+  case kParamInternalSync:
+    open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
+    //GetControlWithTag(kParamHostSync)->SetValue(false);
+    //GetControlWithTag(kParamKeySync)->SetValue(false);
+    //GetControlWithTag(kParamMidiPlay)->SetValue(false);
+    break;
+  case kParamKeySync:
+    open303Core.sequencer.setMode(rosic::AcidSequencer::KEY_SYNC);
+    //GetControlWithTag(kParamHostSync)->SetValue(false);
+    //GetControlWithTag(kParamInternalSync)->SetValue(false);
+    //GetControlWithTag(kParamMidiPlay)->SetValue(false);
+    break;
+  case kParamMidiPlay:
+    open303Core.sequencer.setMode(rosic::AcidSequencer::OFF);
+    //GetControlWithTag(kParamHostSync)->SetValue(false);
+    //GetControlWithTag(kParamInternalSync)->SetValue(false);
+    //GetControlWithTag(kParamKeySync)->SetValue(false);
+    break;
+
+  default:
+    break;
+  }
+}
+
+bool BassMatrix::OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData)
+{
+  return false;
+}
+
+
 #endif
