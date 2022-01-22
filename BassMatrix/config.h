@@ -1,7 +1,7 @@
 #define PLUG_NAME "BassMatrix"
 #define PLUG_MFR "Witech"
-#define PLUG_VERSION_HEX 0x00000a00
-#define PLUG_VERSION_STR "0.10.0"
+#define PLUG_VERSION_HEX 0x00000b00
+#define PLUG_VERSION_STR "0.11.0"
 #define PLUG_UNIQUE_ID '2GcB'
 #define PLUG_MFR_ID 'Acme'
 #define PLUG_URL_STR "https://iplug2.github.io"
