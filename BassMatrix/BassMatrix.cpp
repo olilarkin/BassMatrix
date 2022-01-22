@@ -143,7 +143,7 @@ void BassMatrix::OnParentWindowResize(int width, int height)
 void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** outputs, int nFrames)
 {
   // Channel declaration.
-  double* out01 = outputs[0];  double* out02 = outputs[1];
+  PLUG_SAMPLE_DST* out01 = outputs[0];  PLUG_SAMPLE_DST* out02 = outputs[1];
 
   // No sample accurate leds, because they will not be accurate anyway.
   mLedSeqSender.PushData({ kCtrlTagLedSeq0, {open303Core.sequencer.getStep()} });
