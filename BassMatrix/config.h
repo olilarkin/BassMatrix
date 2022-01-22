@@ -59,7 +59,8 @@
 
 #define BACKGROUND_FN "o303-1130x840.png"
 #define PNG6062_FN "606-2.png"
-#define PNGFX1_FN "fx-1.png"
+#define PNGFX1LITTLE_FN "fx-1-100x100.png"
+#define PNGFX1BIG_FN "fx-1-175x175.png"
 #define PNGBTNLED_FN "btnLed.png"
 #define PNGBTNSEQ_FN "btnSeq.png"
 #define PNGHOSTSYNC_FN "btnHostSync.png"

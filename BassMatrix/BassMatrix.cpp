@@ -59,18 +59,19 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
     pGraphics->AttachBackground(BACKGROUND_FN);
 
     const IBitmap knobRotateBitmap = pGraphics->LoadBitmap(PNG6062_FN, 127);
-    const IBitmap knobTempoBitmap = pGraphics->LoadBitmap(PNGFX1_FN, 127);
-    pGraphics->AttachControl(new IBKnobControl(210, 30, knobTempoBitmap, kParamWaveForm));
-    pGraphics->AttachControl(new IBKnobControl(310, 30, knobTempoBitmap, kParamTuning));
-    pGraphics->AttachControl(new IBKnobControl(410, 30, knobTempoBitmap, kParamCutOff));
-    pGraphics->AttachControl(new IBKnobControl(510, 30, knobTempoBitmap, kParamResonance));
-    pGraphics->AttachControl(new IBKnobControl(610, 30, knobTempoBitmap, kParamEnvMode));
-    pGraphics->AttachControl(new IBKnobControl(710, 30, knobTempoBitmap, kParamDecay));
-    pGraphics->AttachControl(new IBKnobControl(810, 30, knobTempoBitmap, kParamAccent));
+    const IBitmap knobLittleBitmap = pGraphics->LoadBitmap(PNGFX1LITTLE_FN, 127);
+    const IBitmap knobBigBitmap = pGraphics->LoadBitmap(PNGFX1BIG_FN, 127);
+    pGraphics->AttachControl(new IBKnobControl(210, 30, knobLittleBitmap, kParamWaveForm));
+    pGraphics->AttachControl(new IBKnobControl(310, 30, knobLittleBitmap, kParamTuning));
+    pGraphics->AttachControl(new IBKnobControl(410, 30, knobLittleBitmap, kParamCutOff));
+    pGraphics->AttachControl(new IBKnobControl(510, 30, knobLittleBitmap, kParamResonance));
+    pGraphics->AttachControl(new IBKnobControl(610, 30, knobLittleBitmap, kParamEnvMode));
+    pGraphics->AttachControl(new IBKnobControl(710, 30, knobLittleBitmap, kParamDecay));
+    pGraphics->AttachControl(new IBKnobControl(810, 30, knobLittleBitmap, kParamAccent));
 
-    pGraphics->AttachControl(new IBKnobControl(310, 130, knobTempoBitmap, kParamTempo));
-    pGraphics->AttachControl(new IBKnobControl(510, 130, knobTempoBitmap, kParamDrive));
-    pGraphics->AttachControl(new IBKnobControl(710, 130, knobTempoBitmap, kParamVolume));
+    pGraphics->AttachControl(new IBKnobControl(210, 130, knobBigBitmap, kParamTempo));
+//    pGraphics->AttachControl(new IBKnobControl(510, 130, knobBigBitmap, kParamDrive));
+    pGraphics->AttachControl(new IBKnobControl(810 - 75, 130, knobBigBitmap, kParamVolume));
 
     // Led buttons
     const IBitmap ledBtnBitmap = pGraphics->LoadBitmap(PNGBTNLED_FN, 2, true);
@@ -103,13 +104,13 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
     }
 
     const IBitmap btnHostSyncBitmap = pGraphics->LoadBitmap(PNGHOSTSYNC_FN, 2, true);
-    pGraphics->AttachControl(new IBSwitchControl(10, 800, btnHostSyncBitmap, kParamHostSync));
+    pGraphics->AttachControl(new IBSwitchControl(140, 800, btnHostSyncBitmap, kParamHostSync));
     const IBitmap btnKeySyncBitmap = pGraphics->LoadBitmap(PNGKEYSYNC_FN, 2, true);
-    pGraphics->AttachControl(new IBSwitchControl(110, 800, btnKeySyncBitmap, kParamKeySync));
+    pGraphics->AttachControl(new IBSwitchControl(250, 800, btnKeySyncBitmap, kParamKeySync));
     const IBitmap btnInternalSyncBitmap = pGraphics->LoadBitmap(PNGINTERNALSYNC_FN, 2, true);
-    pGraphics->AttachControl(new IBSwitchControl(220, 800, btnInternalSyncBitmap, kParamInternalSync));
+    pGraphics->AttachControl(new IBSwitchControl(360, 800, btnInternalSyncBitmap, kParamInternalSync));
     const IBitmap btnMidiPlayBitmap = pGraphics->LoadBitmap(PNGMIDIPLAY_FN, 2, true);
-    pGraphics->AttachControl(new IBSwitchControl(330, 800, btnMidiPlayBitmap, kParamMidiPlay));
+    pGraphics->AttachControl(new IBSwitchControl(470, 800, btnMidiPlayBitmap, kParamMidiPlay));
 
     //pGraphics->AttachControl(new ITextControl(titleBounds, "BassMatrix", IText(30)), kCtrlTagTitle);
     //WDL_String buildInfoStr;
@@ -238,7 +239,7 @@ void BassMatrix::OnReset()
   open303Core.setPostFilterHighpass(24.0);
   open303Core.setSquarePhaseShift(189.0);
 
-  open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
+//  open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
 }
 
 void BassMatrix::ProcessMidiMsg(const IMidiMsg& msg)
@@ -324,25 +325,37 @@ void BassMatrix::OnParamChange(int paramIdx)
     open303Core.setTanhShaperDrive(value);
     break;
   case kParamHostSync:
-    open303Core.sequencer.setMode(rosic::AcidSequencer::HOST_SYNC);
+    if (value == 1.0)
+    {
+      open303Core.sequencer.setMode(rosic::AcidSequencer::HOST_SYNC);
+    }
     //GetControlWithTag(kParamInternalSync)->SetValue(false);
     //GetControlWithTag(kParamKeySync)->SetValue(false);
     //GetControlWithTag(kParamMidiPlay)->SetValue(false);
     break;
   case kParamInternalSync:
-    open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
+    if (value == 1.0)
+    {
+      open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
+    }
     //GetControlWithTag(kParamHostSync)->SetValue(false);
     //GetControlWithTag(kParamKeySync)->SetValue(false);
     //GetControlWithTag(kParamMidiPlay)->SetValue(false);
     break;
   case kParamKeySync:
-    open303Core.sequencer.setMode(rosic::AcidSequencer::KEY_SYNC);
+    if (value == 1.0)
+    {
+      open303Core.sequencer.setMode(rosic::AcidSequencer::KEY_SYNC);
+    }
     //GetControlWithTag(kParamHostSync)->SetValue(false);
     //GetControlWithTag(kParamInternalSync)->SetValue(false);
     //GetControlWithTag(kParamMidiPlay)->SetValue(false);
     break;
   case kParamMidiPlay:
-    open303Core.sequencer.setMode(rosic::AcidSequencer::OFF);
+    if (value == 1.0)
+    {
+      open303Core.sequencer.setMode(rosic::AcidSequencer::OFF);
+    }
     //GetControlWithTag(kParamHostSync)->SetValue(false);
     //GetControlWithTag(kParamInternalSync)->SetValue(false);
     //GetControlWithTag(kParamKeySync)->SetValue(false);
