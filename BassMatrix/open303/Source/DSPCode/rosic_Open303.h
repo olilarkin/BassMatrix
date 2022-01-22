@@ -344,7 +344,7 @@ namespace rosic
           AcidNote* nextNote = sequencer.getNextScheduledNote();
           if( note->slide && nextNote->gate == true )
           {
-            noteOffCountDown = INT_MAX;
+            noteOffCountDown = std::numeric_limits<int>::max();
             slideToNextNote  = true;
           }
           else
