@@ -1,4 +1,1 @@
-BassMatrix changelog
-www.acmeinc.com
-
-Different size of the knobs.
+One pattern can be played.
