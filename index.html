@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>TemplateProject WAM</title>
+    <title>BassMatrix WAM</title>
     <link href="styles/style.css" rel="stylesheet" type="text/css"/>
     <script src="scripts/audioworklet.js"></script>
     <!--<script src="scripts/websocket.js"></script>-->
@@ -10,7 +10,7 @@
     <!--<script async src="svgs.js"></script>-->
     <!--<script async src="imgs.js"></script>-->
     <!--<script async src="imgs@2x.js"></script>-->
-    <script async src="scripts/TemplateProject-web.js"></script>
+    <script async src="scripts/BassMatrix-web.js"></script>
   </head>
   <body>
     <div id="main"></div>
@@ -25,11 +25,11 @@
         <div id="status">downloading...</div>
       </div>
       <div id="wam" hidden=true>
-        <!-- <div id="wamheader">TemplateProject WAM</div> -->
+        <!-- <div id="wamheader">BassMatrix WAM</div> -->
         <canvas class="pluginArea" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
       </div>
     <script type='text/javascript'>
-      var TemplateProject_WAM; // the WAM controller
+      var BassMatrix_WAM; // the WAM controller
       let WEBSOCKET_MODE=false; // this constant will be set by the makedist-web.sh script 
 
       if(WEBSOCKET_MODE==true) {
@@ -111,7 +111,7 @@
               }
 
               combo.onchange = e => {
-                TemplateProject_WAM.midiOut = e.target.options[e.target.selectedIndex].port;
+                BassMatrix_WAM.midiOut = e.target.options[e.target.selectedIndex].port;
               }
             } else {
               for (let input of midiIF.inputs.values()) {
@@ -121,7 +121,7 @@
               }
 
               combo.onchange = e => {
-                TemplateProject_WAM.midiIn = e.target.options[e.target.selectedIndex].port;
+                BassMatrix_WAM.midiIn = e.target.options[e.target.selectedIndex].port;
               }
             }
 
@@ -160,7 +160,7 @@
           script1.src = "scripts/wam-controller.js";
           script1.onload = () => {
             var script2 = document.createElement("script");
-            script2.src = "scripts/TemplateProject-awn.js";
+            script2.src = "scripts/BassMatrix-awn.js";
             script2.onload = () => {
 
               if(AWPF.isAudioWorkletPolyfilled)
@@ -174,12 +174,12 @@
                              numberOfOutputs: outputBuses.length, outputChannelCount: outputBuses,
                              processorOptions: {inputChannelCount: inputBuses}};
 
-              TemplateProjectController.importScripts(actx).then(() => {
-                TemplateProject_WAM = new TemplateProjectController(actx, options);
+              BassMatrixController.importScripts(actx).then(() => {
+                BassMatrix_WAM = new BassMatrixController(actx, options);
 
-                if(TemplateProject_WAM !== undefined) {
+                if(BassMatrix_WAM !== undefined) {
 
-                  let NInputs = AWPF.isAudioWorkletPolyfilled ? TemplateProject_WAM.input.numberOfInputs : TemplateProject_WAM.numberOfInputs;
+                  let NInputs = AWPF.isAudioWorkletPolyfilled ? BassMatrix_WAM.input.numberOfInputs : BassMatrix_WAM.numberOfInputs;
                   
                   if(NInputs > 0) {
                     var constraints = { audio: true, video:false }
@@ -189,11 +189,11 @@
 
                       // connect audioSource to WAM inputs
                       if(AWPF.isAudioWorkletPolyfilled)
-                        audioSource.connect(TemplateProject_WAM.input)
+                        audioSource.connect(BassMatrix_WAM.input)
                       else
-                        audioSource.connect(TemplateProject_WAM);
+                        audioSource.connect(BassMatrix_WAM);
 
-                      TemplateProject_WAM.connect(actx.destination); // connect WAM output to speakers
+                      BassMatrix_WAM.connect(actx.destination); // connect WAM output to speakers
                       connectionsDone();
                     })
                     .catch((err) => {
@@ -202,12 +202,12 @@
                   }
                   else 
                   {
-                    TemplateProject_WAM.connect(actx.destination); // connect WAM output to speakers
+                    BassMatrix_WAM.connect(actx.destination); // connect WAM output to speakers
                     connectionsDone();
                   }
                 }
                 else {
-                  console.log('TemplateProject_WAM is undefined');
+                  console.log('BassMatrix_WAM is undefined');
                 }
               });
             }
@@ -220,7 +220,7 @@
       // helper method for sending an "arbitary" message to the processor, which can be handled in OnMessage()
       function SendMessageToWAM(msgTag, ctrlTag = -1, data = 0) {
         let propArg = String(msgTag + ":" + ctrlTag);
-        TemplateProject_WAM.port.postMessage({ "type": "msg", "verb": "SAMFUI", "prop": propArg, "data": data });
+        BassMatrix_WAM.port.postMessage({ "type": "msg", "verb": "SAMFUI", "prop": propArg, "data": data });
       }
       
       var statusElement = document.getElementById('status');
