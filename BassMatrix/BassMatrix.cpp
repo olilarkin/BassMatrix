@@ -33,7 +33,10 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
     pGraphics->SetLayoutOnResize(true);
     pGraphics->AttachCornerResizer(EUIResizerMode::Size, true);
     pGraphics->LoadFont("Roboto-Regular", ROBOTO_FN);
-    pGraphics->AttachPanelBackground(COLOR_RED);
+//    pGraphics->AttachPanelBackground(COLOR_RED);
+    pGraphics->LoadBitmap(BACKGROUND_FN, 1, true);
+    pGraphics->AttachBackground(BACKGROUND_FN);
+
     pGraphics->AttachControl(new IVSliderControl(sliderBounds, kParamGain), kCtrlTagSlider);
     pGraphics->AttachControl(new ITextControl(titleBounds, "BassMatrix", IText(30)), kCtrlTagTitle);
     WDL_String buildInfoStr;

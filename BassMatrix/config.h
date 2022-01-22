@@ -1,7 +1,7 @@
 #define PLUG_NAME "BassMatrix"
 #define PLUG_MFR "Witech"
-#define PLUG_VERSION_HEX 0x00000200
-#define PLUG_VERSION_STR "0.2.0"
+#define PLUG_VERSION_HEX 0x00000300
+#define PLUG_VERSION_STR "0.3.0"
 #define PLUG_UNIQUE_ID '2GcB'
 #define PLUG_MFR_ID 'Acme'
 #define PLUG_URL_STR "https://iplug2.github.io"
@@ -24,8 +24,8 @@
 #define PLUG_DOES_MPE 0
 #define PLUG_DOES_STATE_CHUNKS 0
 #define PLUG_HAS_UI 1
-#define PLUG_WIDTH 1024
-#define PLUG_HEIGHT 768
+#define PLUG_WIDTH 1130
+#define PLUG_HEIGHT 840
 #define PLUG_FPS 60
 #define PLUG_SHARED_RESOURCES 1
 #define PLUG_HOST_RESIZE 1
@@ -56,3 +56,5 @@
 #define APP_SIGNAL_VECTOR_SIZE 64
 
 #define ROBOTO_FN "Roboto-Regular.ttf"
+
+#define BACKGROUND_FN "o303-1130x840.png"
