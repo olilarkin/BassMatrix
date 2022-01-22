@@ -258,6 +258,7 @@
     <ClInclude Include="..\..\iPlug2\IGraphics\ISender.h">
       <Filter>IGraphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\o303Controls.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
