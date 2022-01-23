@@ -228,18 +228,20 @@ void BassMatrix::OnReset()
 {
   open303Core.setSampleRate(GetSampleRate());
 
-  //rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
-  //srand(static_cast<unsigned int>(time(0)));
-  //p->randomize();
+#ifndef OLAS_WEB_PLUGIN
+  rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
+  srand(static_cast<unsigned int>(time(0)));
+  p->randomize();
 
-  //open303Core.setTuning(440.0);
-  //open303Core.setCutoff(1000.0);
-  //open303Core.setResonance(50.0);
-  //open303Core.setEnvMod(0.25);
-  //open303Core.setDecay(400.0);
-  //open303Core.setAccent(0.5);
-  //open303Core.setVolume(-6.0);
-  //open303Core.setWaveform(0.0); // Default  open303Core.setWaveform(0.85);
+  open303Core.setTuning(440.0);
+  open303Core.setCutoff(1000.0);
+  open303Core.setResonance(50.0);
+  open303Core.setEnvMod(0.25);
+  open303Core.setDecay(400.0);
+  open303Core.setAccent(0.5);
+  open303Core.setVolume(-6.0);
+  open303Core.setWaveform(0.0); // Default  open303Core.setWaveform(0.85);
+#endif
 
   open303Core.filter.setMode(rosic::TeeBeeFilter::TB_303); // Should be LP_12
   open303Core.setAmpSustain(-60.0);
