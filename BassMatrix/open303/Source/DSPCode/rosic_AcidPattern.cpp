@@ -26,16 +26,16 @@ void AcidPattern::randomize()
 {
   for(int i=0; i<maxNumSteps; i++)
   {
-    //notes[i].key = roundToInt(randomUniform(0, 11, rand()));
-    //notes[i].octave = roundToInt(randomUniform(-1, 1, rand()));
-    //notes[i].accent = roundToInt(randomUniform(0, 1, rand())) == 1;
-    //notes[i].slide = roundToInt(randomUniform(0, 5, rand())) == 4;
-    //notes[i].gate = roundToInt(randomUniform(0, 11, rand())) != 11;
-    notes[i].key = 0;
-    notes[i].octave = 0;
-    notes[i].accent = false;
-    notes[i].slide = false;
-    notes[i].gate = true;
+    notes[i].key = roundToInt(randomUniform(0, 11, rand()));
+    notes[i].octave = roundToInt(randomUniform(-1, 1, rand()));
+    notes[i].accent = roundToInt(randomUniform(0, 1, rand())) == 1;
+    notes[i].slide = roundToInt(randomUniform(0, 5, rand())) == 4;
+    notes[i].gate = roundToInt(randomUniform(0, 11, rand())) != 11;
+    //notes[i].key = 0;
+    //notes[i].octave = 0;
+    //notes[i].accent = false;
+    //notes[i].slide = false;
+    //notes[i].gate = true;
   }
 }
 

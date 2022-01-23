@@ -228,6 +228,15 @@ void BassMatrix::OnReset()
 {
   open303Core.setSampleRate(GetSampleRate());
 
+  open303Core.filter.setMode(rosic::TeeBeeFilter::TB_303); // Should be LP_12
+  open303Core.setAmpSustain(-60.0);
+  open303Core.setTanhShaperDrive(36.9);
+  open303Core.setTanhShaperOffset(4.37);
+  open303Core.setPreFilterHighpass(44.5);
+  open303Core.setFeedbackHighpass(150.0);
+  open303Core.setPostFilterHighpass(24.0);
+  open303Core.setSquarePhaseShift(189.0);
+
 #ifndef OLAS_WEB_PLUGIN
   rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
   srand(static_cast<unsigned int>(time(0)));
@@ -241,18 +250,10 @@ void BassMatrix::OnReset()
   open303Core.setAccent(0.5);
   open303Core.setVolume(-6.0);
   open303Core.setWaveform(0.0); // Default  open303Core.setWaveform(0.85);
+
+  open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
+
 #endif
-
-  open303Core.filter.setMode(rosic::TeeBeeFilter::TB_303); // Should be LP_12
-  open303Core.setAmpSustain(-60.0);
-  open303Core.setTanhShaperDrive(36.9);
-  open303Core.setTanhShaperOffset(4.37);
-  open303Core.setPreFilterHighpass(44.5);
-  open303Core.setFeedbackHighpass(150.0);
-  open303Core.setPostFilterHighpass(24.0);
-  open303Core.setSquarePhaseShift(189.0);
-
-//  open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
 }
 
 void BassMatrix::ProcessMidiMsg(const IMidiMsg& msg)
