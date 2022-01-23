@@ -94,9 +94,9 @@ public:
 
 	void ProcessMidiMsg(const IMidiMsg& msg) /*override*/;
 	void OnReset() /*override*/;
-	void OnParamChange(int paramIdx) override;
-	void OnIdle() override;
-	bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
+	// void OnParamChange(int paramIdx) override;
+	// void OnIdle() override;
+	// bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
 
   
 #if IPLUG_DSP // http://bit.ly/2S64BDd
