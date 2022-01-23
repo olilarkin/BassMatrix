@@ -327,6 +327,27 @@
     <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_ProcessorBase.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_View.h" />
     <ClInclude Include="..\BassMatrix.h" />
+    <ClInclude Include="..\o303Controls.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\GlobalDefinitions.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\GlobalFunctions.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_AcidPattern.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_AcidSequencer.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_AnalogEnvelope.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_BiquadFilter.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_BlendOscillator.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_Complex.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_DecayEnvelope.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_EllipticQuarterBandFilter.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_FourierTransformerRadix2.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_FunctionTemplates.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_LeakyIntegrator.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_MidiNoteEvent.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_MipMappedWaveTable.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_NumberManipulations.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_OnePoleFilter.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_Open303.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_RealFunctions.h" />
+    <ClInclude Include="..\open303\Source\DSPCode\rosic_TeeBeeFilter.h" />
     <ClInclude Include="..\resources\resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -389,6 +410,26 @@
     <ClCompile Include="..\..\iPlug2\IPlug\VST3\IPlugVST3.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_ProcessorBase.cpp" />
     <ClCompile Include="..\BassMatrix.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\fft4g.c" />
+    <ClCompile Include="..\open303\Source\DSPCode\GlobalFunctions.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_AcidPattern.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_AcidSequencer.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_AnalogEnvelope.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_BiquadFilter.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_BlendOscillator.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_Complex.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_DecayEnvelope.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_EllipticQuarterBandFilter.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_FourierTransformerRadix2.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_FunctionTemplates.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_LeakyIntegrator.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_MidiNoteEvent.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_MipMappedWaveTable.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_NumberManipulations.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_OnePoleFilter.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_Open303.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_RealFunctions.cpp" />
+    <ClCompile Include="..\open303\Source\DSPCode\rosic_TeeBeeFilter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\resources\main.rc" />
