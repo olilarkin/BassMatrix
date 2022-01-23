@@ -5,6 +5,7 @@
 #include "open303/Source/DSPCode/rosic_Open303.h"
 #include "IPlugProcessor.h"
 #include "IPlugEditorDelegate.h"
+#include "IPlugAPIBase.h"
 
 const int kNumPresets = 1;
 const int kNumberOfPropButtons = 5 * 16;
@@ -94,7 +95,7 @@ public:
 
 	void ProcessMidiMsg(const IMidiMsg& msg) /*override*/;
 	void OnReset() /*override*/;
-#ifndef WEB_API
+#ifdef WEB_API
 	void OnParamChange(int paramIdx) override;
 	void OnIdle() override;
 	bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;

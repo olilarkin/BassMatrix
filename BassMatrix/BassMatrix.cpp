@@ -219,7 +219,7 @@ void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** output
   mMidiQueue.Flush(nFrames);
 }
 
-#ifndef WEB_API
+#ifdef WEB_API
 void BassMatrix::OnIdle()
 {
   mLedSeqSender.TransmitData(*this);
@@ -264,7 +264,7 @@ void BassMatrix::ProcessMidiMsg(const IMidiMsg& msg)
   mMidiQueue.Add(msg); // Take care of MIDI events in ProcessBlock()
 }
 
-#ifndef DWEB_API
+#ifdef DWEB_API
 void BassMatrix::OnParamChange(int paramIdx)
 {
   double value = GetParam(paramIdx)->Value();
@@ -387,7 +387,7 @@ bool BassMatrix::OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pD
 {
   return false;
 }
-#endif WEB_API
+#endif // WEB_API
 
 
 #endif
