@@ -1,1 +1,1 @@
-Try to get the synth sound on the web.
+Randomize sequencer and start sequenser.
