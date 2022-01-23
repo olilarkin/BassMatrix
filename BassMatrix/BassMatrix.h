@@ -3,6 +3,7 @@
 #include "IPlug_include_in_plug_hdr.h"
 #include "IControls.h"
 #include "open303/Source/DSPCode/rosic_Open303.h"
+#include "IPlugProcessor.h"
 
 const int kNumPresets = 1;
 const int kNumberOfPropButtons = 5 * 16;
