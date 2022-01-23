@@ -219,12 +219,12 @@ void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** output
   mMidiQueue.Flush(nFrames);
 }
 
-#ifdef WEB_API
+//#ifdef WAM_API
 void BassMatrix::OnIdle()
 {
   mLedSeqSender.TransmitData(*this);
 }
-#endif
+//#endif
 
 void BassMatrix::OnReset()
 {
@@ -239,7 +239,7 @@ void BassMatrix::OnReset()
   open303Core.setPostFilterHighpass(24.0);
   open303Core.setSquarePhaseShift(189.0);
 
-#ifndef OLAS_WEB_PLUGIN
+//#ifdef WAM_API
   rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
   srand(static_cast<unsigned int>(time(0)));
   p->randomize();
@@ -264,7 +264,7 @@ void BassMatrix::ProcessMidiMsg(const IMidiMsg& msg)
   mMidiQueue.Add(msg); // Take care of MIDI events in ProcessBlock()
 }
 
-#ifdef DWEB_API
+#ifdef WAM_API
 void BassMatrix::OnParamChange(int paramIdx)
 {
   double value = GetParam(paramIdx)->Value();
@@ -387,7 +387,7 @@ bool BassMatrix::OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pD
 {
   return false;
 }
-#endif // WEB_API
+//#endif // WAM_API
 
 
 #endif

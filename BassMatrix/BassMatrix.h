@@ -95,11 +95,11 @@ public:
 
 	void ProcessMidiMsg(const IMidiMsg& msg) /*override*/;
 	void OnReset() /*override*/;
-#ifdef WEB_API
+//#ifdef WAM_API
 	void OnParamChange(int paramIdx) override;
 	void OnIdle() override;
 	bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
-#endif
+//#endif
   
 #if IPLUG_DSP // http://bit.ly/2S64BDd
   void ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** outputs, int nFrames) override;
