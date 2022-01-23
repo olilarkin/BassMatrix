@@ -1,1 +1,1 @@
-Separated some part from dsp and controller.
+Made file size of png smaller.
