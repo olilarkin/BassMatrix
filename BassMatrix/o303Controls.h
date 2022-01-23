@@ -58,7 +58,7 @@ public:
       SetDirty(false);
     }
   }
-  void OnMouseDown(float x, float y, const IMouseMod& mod)
+  void OnMouseDown(float x, float y, const IMouseMod& mod) override
   {
     return;
   }
