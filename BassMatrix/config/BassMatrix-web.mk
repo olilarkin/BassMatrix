@@ -25,7 +25,7 @@ SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_Open303.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_RealFunctions.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_TeeBeeFilter.cpp
 
-# WAM_SRC += 
+#WEB_SRC += $(PROJECT_ROOT)/BassMatrix.cpp
 
 # WAM_CFLAGS +=
 

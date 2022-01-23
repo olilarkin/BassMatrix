@@ -95,7 +95,7 @@ public:
 
 	void ProcessMidiMsg(const IMidiMsg& msg) /*override*/;
 	void OnReset() /*override*/;
-#ifdef WEB_API
+#if IPLUG_DSP
 	void OnParamChange(int paramIdx) override;
 	void OnIdle() override;
 	bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;

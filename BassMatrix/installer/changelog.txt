@@ -1,1 +1,1 @@
-Randomize sequencer and start sequenser.
+Separated some part from dsp and controller.
