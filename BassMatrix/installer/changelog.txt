@@ -1,1 +1,1 @@
-Made some changes in make files.
+Removed png file
