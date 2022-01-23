@@ -1,1 +1,1 @@
-Removed png file
+Separated some part from dsp and controller.

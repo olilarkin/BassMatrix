@@ -4,6 +4,7 @@ IPLUG2_ROOT = ../../iPlug2
 
 include ../../common-web.mk
 
+SRC += $(PROJECT_ROOT)/BassMatrix.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/GlobalFunctions.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_AcidPattern.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_AcidSequencer.cpp
@@ -24,7 +25,7 @@ SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_Open303.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_RealFunctions.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_TeeBeeFilter.cpp
 
-WAM_SRC += $(PROJECT_ROOT)/BassMatrix.cpp
+#WEB_SRC += $(PROJECT_ROOT)/BassMatrix.cpp
 
 # WAM_CFLAGS +=
 
