@@ -4,6 +4,7 @@
 #include "IControls.h"
 #include "open303/Source/DSPCode/rosic_Open303.h"
 #include "IPlugProcessor.h"
+#include "IPlugEditorDelegate.h"
 
 const int kNumPresets = 1;
 const int kNumberOfPropButtons = 5 * 16;
