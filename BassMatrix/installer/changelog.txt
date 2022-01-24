@@ -1,1 +1,1 @@
-Made file size of png smaller.
+Sequencer buttons is now showing the rigth values.

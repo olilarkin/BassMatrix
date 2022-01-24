@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>BassMatrix</string>
 	<key>CFBundleGetInfoString</key>
-	<string>BassMatrix v0.25.0 Copyright 2021 Acme Inc</string>
+	<string>BassMatrix v0.26.0 Copyright 2021 Acme Inc</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.Witech.app.BassMatrix.AUv3</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.25.0</string>
+	<string>0.26.0</string>
 	<key>CFBundleVersion</key>
-	<string>0.25.0</string>
+	<string>0.26.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.12.0</string>
 	<key>NSExtension</key>
@@ -48,7 +48,7 @@
 					<key>type</key>
 					<string>aufx</string>
 					<key>version</key>
-					<integer>6400</integer>
+					<integer>6656</integer>
 				</dict>
 			</array>
 		</dict>
