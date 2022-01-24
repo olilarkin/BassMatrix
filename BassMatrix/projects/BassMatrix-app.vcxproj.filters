@@ -137,6 +137,7 @@
     <ClCompile Include="..\open303\Source\DSPCode\rosic_TeeBeeFilter.cpp">
       <Filter>open303</Filter>
     </ClCompile>
+    <ClCompile Include="..\BassMatrixControls.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BassMatrix.h" />
@@ -318,7 +319,6 @@
     <ClInclude Include="..\..\iPlug2\IGraphics\ISender.h">
       <Filter>IGraphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\o303Controls.h" />
     <ClInclude Include="..\open303\Source\DSPCode\GlobalDefinitions.h">
       <Filter>open303</Filter>
     </ClInclude>
@@ -379,6 +379,7 @@
     <ClInclude Include="..\open303\Source\DSPCode\rosic_TeeBeeFilter.h">
       <Filter>open303</Filter>
     </ClInclude>
+    <ClInclude Include="..\BassMatrixControls.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">

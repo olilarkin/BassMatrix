@@ -327,7 +327,7 @@
     <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_ProcessorBase.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_View.h" />
     <ClInclude Include="..\BassMatrix.h" />
-    <ClInclude Include="..\o303Controls.h" />
+    <ClInclude Include="..\BassMatrixControls.h" />
     <ClInclude Include="..\open303\Source\DSPCode\GlobalDefinitions.h" />
     <ClInclude Include="..\open303\Source\DSPCode\GlobalFunctions.h" />
     <ClInclude Include="..\open303\Source\DSPCode\rosic_AcidPattern.h" />
@@ -410,6 +410,7 @@
     <ClCompile Include="..\..\iPlug2\IPlug\VST3\IPlugVST3.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_ProcessorBase.cpp" />
     <ClCompile Include="..\BassMatrix.cpp" />
+    <ClCompile Include="..\BassMatrixControls.cpp" />
     <ClCompile Include="..\open303\Source\DSPCode\fft4g.c" />
     <ClCompile Include="..\open303\Source\DSPCode\GlobalFunctions.cpp" />
     <ClCompile Include="..\open303\Source\DSPCode\rosic_AcidPattern.cpp" />

@@ -318,7 +318,7 @@
     <ClInclude Include="..\..\iPlug2\IPlug\IPlug_include_in_plug_hdr.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlug_include_in_plug_src.h" />
     <ClInclude Include="..\BassMatrix.h" />
-    <ClInclude Include="..\o303Controls.h" />
+    <ClInclude Include="..\BassMatrixControls.h" />
     <ClInclude Include="..\open303\Source\DSPCode\GlobalDefinitions.h" />
     <ClInclude Include="..\open303\Source\DSPCode\GlobalFunctions.h" />
     <ClInclude Include="..\open303\Source\DSPCode\rosic_AcidPattern.h" />
@@ -382,6 +382,7 @@
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugProcessor.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugTimer.cpp" />
     <ClCompile Include="..\BassMatrix.cpp" />
+    <ClCompile Include="..\BassMatrixControls.cpp" />
     <ClCompile Include="..\open303\Source\DSPCode\fft4g.c" />
     <ClCompile Include="..\open303\Source\DSPCode\GlobalFunctions.cpp" />
     <ClCompile Include="..\open303\Source\DSPCode\rosic_AcidPattern.cpp" />

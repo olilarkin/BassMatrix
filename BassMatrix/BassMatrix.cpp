@@ -1,6 +1,6 @@
 #include "BassMatrix.h"
 #include "IPlug_include_in_plug_src.h"
-#include "o303Controls.h"
+#include "BassMatrixControls.h"
 #include "open303/Source/DSPCode/rosic_Open303.h"
 
 #if IPLUG_EDITOR
@@ -17,7 +17,7 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
   GetParam(kParamEnvMode)->InitDouble("Env mode", 25.0, 0.0, 100.0, 1.0, "%");
   GetParam(kParamDecay)->InitDouble("Decay", 400.0, 200.0, 2000.0, 1.0, "ms");
   GetParam(kParamAccent)->InitDouble("Accent", 50.0, 0.0, 100.0, 1.0, "%");
-  GetParam(kParamVolume)->InitDouble("Volume", -6.0, -100.0, 0.0, 0.1, "dB");
+  GetParam(kParamVolume)->InitDouble("Volume", -12.0, -100.0, 0.0, 0.1, "dB");
   GetParam(kParamTempo)->InitDouble("Tempo", 120.0, 0.0, 300.0, 1.0, "bpm");
   GetParam(kParamDrive)->InitDouble("Drive", 36.9, 0.0, 50.0, 1.0, "bpm");
 
@@ -26,6 +26,8 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
   GetParam(kParamInternalSync)->InitBool("Internal Sync", true);
   GetParam(kParamMidiPlay)->InitBool("Midi Play", false);
 
+  // This value set here have not so much relevance, since we tell the sequencer to
+  // randomize the current pattern and then tells the gui to update.
   for (int i = kBtnSeq0; i < kBtnSeq0 + kNumberOfSeqButtons; ++i)
   {
     char buf[256];
@@ -41,7 +43,6 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
     {
       GetParam(i)->InitBool(buf, true);
     }
-
   }
 
 
@@ -98,7 +99,7 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
         for (int j = 0; j < 12; j++)
         {
             pGraphics->AttachControl(new SeqNoteBtnControl(140.f + i * (btnSeqBitmap.W() / 2 + 26), 380.f + j * (btnSeqBitmap.H() + 1),
-                btnSeqBitmap, kBtnSeq0 + 16 * j + i, open303Core),
+                btnSeqBitmap, kBtnSeq0 + 16 * j + i),
                 kCtrlTagBtnSeq0 + 16 * j + i, "Sequencer");
         }
     }
@@ -109,7 +110,7 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
         for (int j = 0; j < 5; j++)
         {
             pGraphics->AttachControl(new SeqNoteBtnControl(140.f + i * (btnSeqBitmap.W() / 2 + 26), 660.f + j * (btnSeqBitmap.H() + 1),
-                btnSeqBitmap, kBtnProp0 + 16 * j + i, open303Core),
+                btnSeqBitmap, kBtnProp0 + 16 * j + i),
                 kCtrlTagBtnProp0 + 16 * j + i, "Sequencer");
         }
     }
@@ -171,9 +172,11 @@ void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** output
     {
       open303Core.sequencer.setUpdateSequenserGUI(false);
       std::array<bool, kNumberOfSeqButtons> seq;
+      rosic::AcidPattern* pattern = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
+
       for (int i = 0; i < kNumberOfSeqButtons - kNumberOfPropButtons; ++i)
       {
-        seq[i] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->key == 11 - i / 16;
+        seq[i] = pattern->getNote(i % 16)->key == 11 - i / 16;
       }
 
       for (int i = 0; i < kNumberOfPropButtons; ++i) // The note properties
@@ -181,23 +184,23 @@ void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** output
         int j = i + kNumberOfSeqButtons - kNumberOfPropButtons;
         if (i < 16)
         {
-          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->octave == 1;
+          seq[j] = pattern->getNote(i % 16)->octave == 1;
         }
         else if (i < 32)
         {
-          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->octave == -1;
+          seq[j] = pattern->getNote(i % 16)->octave == -1;
         }
         else if (i < 48)
         {
-          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->accent;
+          seq[j] = pattern->getNote(i % 16)->accent;
         }
         else if (i < 64)
         {
-          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->slide;
+          seq[j] = pattern->getNote(i % 16)->slide;
         }
         else if (i < 80)
         {
-          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->gate;
+          seq[j] = pattern->getNote(i % 16)->gate;
         }
       }
 
@@ -272,9 +275,9 @@ void BassMatrix::OnReset()
   open303Core.setPostFilterHighpass(24.0);
   open303Core.setSquarePhaseShift(189.0);
 
-  rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
+  rosic::AcidPattern* pattern = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
   srand(static_cast<unsigned int>(time(0)));
-  p->randomize();
+  pattern->randomize();
 
 #ifdef WAM_API
 
@@ -305,11 +308,12 @@ void BassMatrix::OnParamChange(int paramIdx)
   // Note buttons
   if (paramIdx >= kBtnSeq0 && paramIdx < kBtnSeq0 + kNumberOfSeqButtons - kNumberOfPropButtons)
   {
-    int seqNr = paramIdx - kBtnSeq0;
-    rosic::AcidPattern* p = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
+    int seqNr = (paramIdx - kBtnSeq0) % 16;
+    int noteNr = kNumberOfNoteBtns - (paramIdx - kBtnSeq0) / 16;
+    rosic::AcidPattern* pattern = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
     if (value == 1.0)
     {
-      p->setKey(seqNr % 16, 11 - seqNr / 16); // Take care of the key notes
+      pattern->setKey(seqNr, noteNr); // Take care of the key notes
     }
     return;
   }
@@ -319,26 +323,26 @@ void BassMatrix::OnParamChange(int paramIdx)
   {
     int seqNr = (paramIdx - kBtnProp0) % 16;
     int rowNr = (paramIdx - kBtnProp0) / 16;
-    rosic::AcidPattern* p = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
+    rosic::AcidPattern* pattern = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
     if (rowNr == 0)
     {
-      p->setOctave(seqNr, value == 1.0 ? 1 : 0);
+      pattern->setOctave(seqNr, value == 1.0 ? 1 : 0);
     }
     if (rowNr == 1)
     {
-      p->setOctave(seqNr, value == 1.0 ? -1 : 0);
+      pattern->setOctave(seqNr, value == 1.0 ? -1 : 0);
     }
     if (rowNr == 2)
     {
-      p->setAccent(seqNr, value == 1.0 ? true : false);
+      pattern->setAccent(seqNr, value == 1.0 ? true : false);
     }
     if (rowNr == 3)
     {
-      p->setSlide(seqNr, value == 1.0 ? true : false);
+      pattern->setSlide(seqNr, value == 1.0 ? true : false);
     }
     if (rowNr == 4)
     {
-      p->setGate(seqNr, value == 1.0 ? true : false);
+      pattern->setGate(seqNr, value == 1.0 ? true : false);
     }
     return;
   }
@@ -379,36 +383,24 @@ void BassMatrix::OnParamChange(int paramIdx)
     {
       open303Core.sequencer.setMode(rosic::AcidSequencer::HOST_SYNC);
     }
-    //GetControlWithTag(kParamInternalSync)->SetValue(false);
-    //GetControlWithTag(kParamKeySync)->SetValue(false);
-    //GetControlWithTag(kParamMidiPlay)->SetValue(false);
     break;
   case kParamInternalSync:
     if (value == 1.0)
     {
       open303Core.sequencer.setMode(rosic::AcidSequencer::RUN);
     }
-    //GetControlWithTag(kParamHostSync)->SetValue(false);
-    //GetControlWithTag(kParamKeySync)->SetValue(false);
-    //GetControlWithTag(kParamMidiPlay)->SetValue(false);
     break;
   case kParamKeySync:
     if (value == 1.0)
     {
       open303Core.sequencer.setMode(rosic::AcidSequencer::KEY_SYNC);
     }
-    //GetControlWithTag(kParamHostSync)->SetValue(false);
-    //GetControlWithTag(kParamInternalSync)->SetValue(false);
-    //GetControlWithTag(kParamMidiPlay)->SetValue(false);
     break;
   case kParamMidiPlay:
     if (value == 1.0)
     {
       open303Core.sequencer.setMode(rosic::AcidSequencer::OFF);
     }
-    //GetControlWithTag(kParamHostSync)->SetValue(false);
-    //GetControlWithTag(kParamInternalSync)->SetValue(false);
-    //GetControlWithTag(kParamKeySync)->SetValue(false);
     break;
 
   default:

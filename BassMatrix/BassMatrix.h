@@ -9,7 +9,8 @@
 
 const int kNumPresets = 1;
 const int kNumberOfPropButtons = 5 * 16;
-const int kNumberOfSeqButtons = 12 * 16 + kNumberOfPropButtons;
+const int kNumberOfNoteBtns = 12;
+const int kNumberOfSeqButtons = kNumberOfNoteBtns * 16 + kNumberOfPropButtons;
 
 enum EParams
 {
@@ -30,7 +31,7 @@ enum EParams
 
 	kBtnSeq0,
 
-	kBtnProp0 = kBtnSeq0 + 16 * 12,
+	kBtnProp0 = kBtnSeq0 + 16 * kNumberOfNoteBtns,
 
 	kLedBtn0 = kBtnProp0 + kNumberOfPropButtons,
 	kLedBtn1,
@@ -57,7 +58,7 @@ enum ECtrlTags
   kCtrlTagVersionNumber = 0,
   kCtrlTagBtnSeq0,
 
-  kCtrlTagBtnProp0 = kCtrlTagBtnSeq0 + 16 * 12,
+  kCtrlTagBtnProp0 = kCtrlTagBtnSeq0 + 16 * kNumberOfNoteBtns,
 
   kCtrlTagLedSeq0 = kCtrlTagBtnProp0 + 16 * 5,
   kCtrlTagLedSeq1,
