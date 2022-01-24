@@ -5,6 +5,7 @@ IPLUG2_ROOT = ../../iPlug2
 include ../../common-web.mk
 
 SRC += $(PROJECT_ROOT)/BassMatrix.cpp
+SRC += $(PROJECT_ROOT)/BassMatrixControls.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/GlobalFunctions.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_AcidPattern.cpp
 SRC += $(PROJECT_ROOT)/open303/Source/DSPCode/rosic_AcidSequencer.cpp

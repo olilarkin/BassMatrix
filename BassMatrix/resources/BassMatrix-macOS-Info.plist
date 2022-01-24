@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>BassMatrix</string>
 	<key>CFBundleGetInfoString</key>
-	<string>BassMatrix v0.26.0 Copyright 2021 Acme Inc</string>
+	<string>BassMatrix v0.27.0 Copyright 2021 Acme Inc</string>
 	<key>CFBundleIconFile</key>
 	<string>BassMatrix.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -19,11 +19,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.26.0</string>
+	<string>0.27.0</string>
 	<key>CFBundleSignature</key>
 	<string>2GcB</string>
 	<key>CFBundleVersion</key>
-	<string>0.26.0</string>
+	<string>0.27.0</string>
 	<key>CSResourcesFileMapped</key>
 	<true/>
 	<key>LSApplicationCategoryType</key>

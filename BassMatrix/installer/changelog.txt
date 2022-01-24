@@ -1,1 +1,1 @@
-Sequencer buttons is now showing the rigth values.
+Forgot to add a new file.
