@@ -157,6 +157,10 @@ namespace rosic
 
     int getActivePattern() { return activePattern; }
 
+    bool getUpdateSequenserGUI() { return updateSequenserGUI; }
+
+    void setUpdateSequenserGUI(bool v) { updateSequenserGUI = v; }
+
     //---------------------------------------------------------------------------------------------
     // others:
 
@@ -177,7 +181,7 @@ namespace rosic
     int    sequencerMode;      // the selected mode for the sequencer
     double driftError;         // to keep track and compensate for accumulating timing error
     bool   keyPermissible[13]; // array of flags to indicate if a particular key is permissible
-
+    bool   updateSequenserGUI; // sequencer has been updated in such a way it affects the GUI.
   };
 
   //-----------------------------------------------------------------------------------------------

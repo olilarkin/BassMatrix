@@ -150,15 +150,6 @@ void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** output
 
   if (open303Core.sequencer.getSequencerMode() == rosic::AcidSequencer::HOST_SYNC)
   {
-    //static bool firstTime = true;
-    //if (firstTime)
-    //{
-    //  firstTime = false;
-    //  // No sample accurate sequencer, because it will not be accurate anyway
-    //  std::array<bool, kNumberOfSeqButtons> seq{ false, true, false, true };
-    //  mSequencerSender.PushData({ kCtrlTagBtnSeq0, {seq} });
-    //}
-
     open303Core.sequencer.setTempo(GetTempo());
     if (!GetTransportIsRunning())
     {
@@ -172,6 +163,47 @@ void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** output
     !open303Core.sequencer.isRunning())
   {
     open303Core.noteOn(36, 64, 0.0);
+  }
+
+  if (open303Core.sequencer.getSequencerMode() != rosic::AcidSequencer::OFF)
+  {
+    if (open303Core.sequencer.getUpdateSequenserGUI())
+    {
+      open303Core.sequencer.setUpdateSequenserGUI(false);
+      std::array<bool, kNumberOfSeqButtons> seq;
+      for (int i = 0; i < kNumberOfSeqButtons - kNumberOfPropButtons; ++i)
+      {
+        seq[i] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->key == 11 - i / 16;
+      }
+
+      for (int i = 0; i < kNumberOfPropButtons; ++i) // The note properties
+      {
+        int j = i + kNumberOfSeqButtons - kNumberOfPropButtons;
+        if (i < 16)
+        {
+          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->octave == 1;
+        }
+        else if (i < 32)
+        {
+          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->octave == -1;
+        }
+        else if (i < 48)
+        {
+          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->accent;
+        }
+        else if (i < 64)
+        {
+          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->slide;
+        }
+        else if (i < 80)
+        {
+          seq[j] = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->gate;
+        }
+      }
+
+      mSequencerSender.PushData({ kCtrlTagBtnSeq0, {seq} });
+
+    }
   }
 
   for (int offset = 0; offset < nFrames; ++offset)
@@ -223,6 +255,7 @@ void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** output
 void BassMatrix::OnIdle()
 {
   mLedSeqSender.TransmitData(*this);
+  mSequencerSender.TransmitData(*this);
 }
 #endif
 
@@ -239,10 +272,11 @@ void BassMatrix::OnReset()
   open303Core.setPostFilterHighpass(24.0);
   open303Core.setSquarePhaseShift(189.0);
 
-#ifdef WAM_API
   rosic::AcidPattern* p = open303Core.sequencer.getPattern(0);
   srand(static_cast<unsigned int>(time(0)));
   p->randomize();
+
+#ifdef WAM_API
 
   open303Core.setTuning(440.0);
   open303Core.setCutoff(1000.0);

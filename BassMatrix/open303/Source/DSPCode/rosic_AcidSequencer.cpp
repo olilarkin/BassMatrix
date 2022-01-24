@@ -4,7 +4,8 @@ using namespace rosic;
 //-------------------------------------------------------------------------------------------------
 // construction/destruction:
 
-AcidSequencer::AcidSequencer()
+AcidSequencer::AcidSequencer() :
+  updateSequenserGUI(true)
 {
   sampleRate    = 44100.0;
   bpm           = 140.0;

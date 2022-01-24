@@ -112,4 +112,5 @@ private:
   // the embedded core dsp object:
   rosic::Open303 open303Core;
 	ISender<1, 1, int> mLedSeqSender;
+	ISender<1, 1, std::array<bool, kNumberOfSeqButtons>> mSequencerSender;
 };

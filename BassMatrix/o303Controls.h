@@ -82,55 +82,18 @@ public:
   {
     if (!IsDisabled() && msgTag == ISender<>::kUpdateMessage)
     {
-      //IByteStream stream(pData, dataSize);
-      //int pos = 0;
-      //ISenderData<1, std::array<bool, kNumberOfSeqButtons>> d;
-      //pos = stream.Get(&d, pos);
-      //std::array<bool, kNumberOfSeqButtons> sequencer = d.vals[0];
-
-      //
-      // Take a shortcut and ignore the value sent as a message
-      //
-    
-      for (int i = 0; i < kNumberOfSeqButtons - kNumberOfPropButtons; i++)
+      IByteStream stream(pData, dataSize);
+      int pos = 0;
+      ISenderData<1, std::array<bool, kNumberOfSeqButtons>> d;
+      pos = stream.Get(&d, pos);
+      std::array<bool, kNumberOfSeqButtons> sequencer = d.vals[0];
+   
+      for (int i = 0; i < kNumberOfSeqButtons; i++)
       {
         IControl* pControlBtn = GetUI()->GetControlWithTag(kCtrlTagBtnSeq0 + i);
         double before = pControlBtn->GetValue();
-        rosic::AcidPattern* p = open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern());
-        int key = p->getKey(i % 16);
-        pControlBtn->SetValue(key == 11 - i / 16 ? 1.0 : 0.0); // Take care of the key notes
+        pControlBtn->SetValue(sequencer[i] ? 1.0 : 0.0);
         if (before != pControlBtn->GetValue())
-        {
-          pControlBtn->SetDirty(true);
-        }
-      }
-
-      for (int i = 0; i < kNumberOfPropButtons; ++i) // The note properties
-      {
-        IControl* pControlBtn = GetUI()->GetControlWithTag(kCtrlTagBtnProp0 + i);
-        double before = pControlBtn->GetValue();
-
-        if (i < 16)
-        {
-          pControlBtn->SetValue(open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->octave == 1 ? 1.0 : 0.0);
-        }
-        else if (i < 32)
-        {
-          pControlBtn->SetValue(open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->octave == -1 ? 1.0 : 0.0);
-        }
-        else if (i < 48)
-        {
-          pControlBtn->SetValue(open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->accent ? 1.0 : 0.0);
-        }
-        else if (i < 64)
-        {
-          pControlBtn->SetValue(open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->slide ? 1.0 : 0.0);
-        }
-        else if (i < 80)
-        {
-          pControlBtn->SetValue(open303Core.sequencer.getPattern(open303Core.sequencer.getActivePattern())->getNote(i % 16)->gate ? 1.0 : 0.0);
-        }
-        if(before != pControlBtn->GetValue())
         {
           pControlBtn->SetDirty(true);
         }
