@@ -57,7 +57,7 @@
 
 #define ROBOTO_FN "Roboto-Regular.ttf"
 
-#define BACKGROUND_FN "o303-1130x840.png"
+#define BACKGROUND_FN "background-1130x840.png"
 #define PNG6062_FN "606-2.png"
 #define PNGFX1LITTLE_FN "fx-1-100x100.png"
 #define PNGFX1BIG_FN "fx-1-175x175.png"

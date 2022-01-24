@@ -17,7 +17,7 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
   GetParam(kParamEnvMode)->InitDouble("Env mode", 25.0, 0.0, 100.0, 1.0, "%");
   GetParam(kParamDecay)->InitDouble("Decay", 400.0, 200.0, 2000.0, 1.0, "ms");
   GetParam(kParamAccent)->InitDouble("Accent", 50.0, 0.0, 100.0, 1.0, "%");
-  GetParam(kParamVolume)->InitDouble("Volume", -12.0, -100.0, 0.0, 0.1, "dB");
+  GetParam(kParamVolume)->InitDouble("Volume", -17.0, -100.0, 0.0, 0.1, "dB");
   GetParam(kParamTempo)->InitDouble("Tempo", 120.0, 0.0, 300.0, 1.0, "bpm");
   GetParam(kParamDrive)->InitDouble("Drive", 36.9, 0.0, 50.0, 1.0, "bpm");
 
