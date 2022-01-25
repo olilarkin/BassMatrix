@@ -46,8 +46,8 @@ if [ "$#" -eq 3 ]; then
 fi
 
 # check to see if the build web folder has its own git repo
-if [ -d build-web/.git ]
-then
+# if [ -d build-web/.git ]
+# then
   # if so trash only the scripts
   if [ -d build-web/scripts ]; then
     if [ "$BUILD_DSP" -eq "1" ]; then
@@ -58,14 +58,14 @@ then
       rm build-web/scripts/*-web.*
     fi
   fi
-else
-  # otherwise trash the whole build-web folder
-  if [ -d build-web ]; then 
-    rm -r build-web
-  fi
+# else
+#   # otherwise trash the whole build-web folder
+#   if [ -d build-web ]; then 
+#     rm -r build-web
+#   fi
 
-  mkdir build-web
-fi
+#   mkdir build-web
+# fi
 
 mkdir build-web/scripts
 
