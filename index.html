@@ -16,10 +16,10 @@
     <div id="main"></div>
       <div id="buttons">
         <button type="button" id="startWebAudioButton" onclick="startWebAudio()" disabled>Start web audio!</button>
-        <button type="button" id="fullScreenButton" onclick="toggleFullScreen()">Fullscreen</button>
+        <!-- <button type="button" id="fullScreenButton" onclick="toggleFullScreen()">Fullscreen</button> -->
         <select id="midiInSelect" disabled="true"><option value="default">Midi input</option></select>
-        <select id="midiOutSelect" disabled="true"><option value="default">Midi output</option></select>
-        <progress value="0" max="100" id="progress"></progress>
+        <!-- <select id="midiOutSelect" disabled="true"><option value="default">Midi output</option></select> -->
+        <!-- <progress value="0" max="100" id="progress"></progress> -->
       </div>
       <div id="greyout">
         <div id="status">downloading...</div>
@@ -168,7 +168,7 @@
               else
                 console.log("AudioWorklet Supported");
               
-              let inputBuses = [2];
+              let inputBuses = [];
               let outputBuses = [2];
               let options = {numberOfInputs: inputBuses.length, inputChannelCount: inputBuses, 
                              numberOfOutputs: outputBuses.length, outputChannelCount: outputBuses,
@@ -178,29 +178,6 @@
                 BassMatrix_WAM = new BassMatrixController(actx, options);
 
                 if(BassMatrix_WAM !== undefined) {
-
-                  let NInputs = AWPF.isAudioWorkletPolyfilled ? BassMatrix_WAM.input.numberOfInputs : BassMatrix_WAM.numberOfInputs;
-                  
-                  if(NInputs > 0) {
-                    var constraints = { audio: true, video:false }
-                    navigator.mediaDevices.getUserMedia(constraints)
-                    .then((stream) => {
-                      let audioSource = actx.createMediaStreamSource(stream);
-
-                      // connect audioSource to WAM inputs
-                      if(AWPF.isAudioWorkletPolyfilled)
-                        audioSource.connect(BassMatrix_WAM.input)
-                      else
-                        audioSource.connect(BassMatrix_WAM);
-
-                      BassMatrix_WAM.connect(actx.destination); // connect WAM output to speakers
-                      connectionsDone();
-                    })
-                    .catch((err) => {
-                      console.log('Error initializing user media stream: ' + err);
-                    });
-                  }
-                  else 
                   {
                     BassMatrix_WAM.connect(actx.destination); // connect WAM output to speakers
                     connectionsDone();

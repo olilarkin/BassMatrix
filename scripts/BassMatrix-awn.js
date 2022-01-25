@@ -14,7 +14,7 @@ class BassMatrixController extends WAMController
   }
 
   static importScripts (actx) {
-    var origin = "https://olawistedt.github.io/BassMatrix/";
+    var origin = "https://olilarkin.github.io/BassMatrix/";
 
     return new Promise( (resolve) => {
       actx.audioWorklet.addModule(origin + "scripts/BassMatrix-wam.js").then(() => {
