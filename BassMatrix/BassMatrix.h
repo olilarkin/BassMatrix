@@ -93,10 +93,9 @@ public:
   bool OnHostRequestingSupportedViewConfiguration(int width, int height) override { return true; }
 #endif
 
-
+#if IPLUG_DSP
 	void ProcessMidiMsg(const IMidiMsg& msg) override;
 	void OnReset() override;
-#if IPLUG_DSP
 	void OnParamChange(int paramIdx) override;
 	void OnIdle() override;
 	bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
