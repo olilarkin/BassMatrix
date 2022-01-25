@@ -53,18 +53,14 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
   
   mLayoutFunc = [&](IGraphics* pGraphics) {
     const IRECT bounds = pGraphics->GetBounds();
-    const IRECT innerBounds = bounds.GetPadded(-10.f);
-    const IRECT sliderBounds = innerBounds.GetFromLeft(150).GetMidVPadded(100);
-    const IRECT versionBounds = innerBounds.GetFromTRHC(300, 20);
-    const IRECT titleBounds = innerBounds.GetCentredInside(200, 50);
+    
+//    if (pGraphics->NControls()) {
+//      pGraphics->GetBackgroundControl()->SetTargetAndDrawRECTs(bounds);
+//      return;
+//    }
 
-    if (pGraphics->NControls()) {
-      pGraphics->GetBackgroundControl()->SetTargetAndDrawRECTs(bounds);
-      return;
-    }
-
-    pGraphics->SetLayoutOnResize(true);
-    pGraphics->AttachCornerResizer(EUIResizerMode::Size, true);
+//    pGraphics->SetLayoutOnResize(true);
+    pGraphics->AttachCornerResizer(EUIResizerMode::Scale, false);
     pGraphics->LoadFont("Roboto-Regular", ROBOTO_FN);
 //    pGraphics->AttachPanelBackground(COLOR_RED);
     pGraphics->LoadBitmap(BACKGROUND_FN, 1, true);
@@ -132,13 +128,13 @@ BassMatrix::BassMatrix(const InstanceInfo& info)
 #endif
 }
 
-#if IPLUG_EDITOR
-void BassMatrix::OnParentWindowResize(int width, int height)
-{
-  if(GetUI())
-    GetUI()->Resize(width, height, 1.f, false);
-}
-#endif
+//#if IPLUG_EDITOR
+//void BassMatrix::OnParentWindowResize(int width, int height)
+//{
+//  if(GetUI())
+//    GetUI()->Resize(width, height, 1.f, false);
+//}
+//#endif
 
 #if IPLUG_DSP
 void BassMatrix::ProcessBlock(PLUG_SAMPLE_DST** inputs, PLUG_SAMPLE_DST** outputs, int nFrames)
