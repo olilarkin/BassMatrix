@@ -89,13 +89,13 @@ public:
   BassMatrix(const InstanceInfo& info);
 
 #if IPLUG_EDITOR
-  void OnParentWindowResize(int width, int height) override;
+//  void OnParentWindowResize(int width, int height) override;
   bool OnHostRequestingSupportedViewConfiguration(int width, int height) override { return true; }
 #endif
 
 
-	void ProcessMidiMsg(const IMidiMsg& msg) /*override*/;
-	void OnReset() /*override*/;
+	void ProcessMidiMsg(const IMidiMsg& msg) override;
+	void OnReset() override;
 #if IPLUG_DSP
 	void OnParamChange(int paramIdx) override;
 	void OnIdle() override;
